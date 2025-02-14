@@ -1,0 +1,51 @@
+KNOWLEDGE-GRAPH/
+│── node_modules/
+│── public/
+│── src/
+│   ├── assets/
+│   │   ├── react.svg
+│   ├── components/
+│   │   ├── ui/
+│   │   │   ├── ChatApp.tsx
+│   │   ├── Custom3D.jsx
+│   │   ├── data.json
+│   │   ├── EntityAnalysisDashboard.jsx
+│   │   ├── KnowledgeGraphManager.jsx
+│   │   ├── Navbar.jsx
+│   ├── lib/
+│   │   ├── types.ts
+│   │   ├── utils.ts
+│   ├── pages/
+│   │   ├── Chat.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── Homepage.jsx
+│   │   ├── Login.jsx
+│   │   ├── page.tsx
+│   │   ├── PageNotFound.jsx
+│   │   ├── Signup.jsx
+│   ├── services/
+│   │   ├── llm.ts
+│   ├── styles/
+│   │   ├── globals.css
+│   ├── utils/
+│   │   ├── date.ts
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+│── .env.local
+│── .gitignore
+│── 3-d.png
+│── analysis.png
+│── docker-compose.yml
+│── Dockerfile
+│── eslint.config.js
+│── graph-manager.png
+│── index.html
+│── package-lock.json
+│── package.json
+│── postcss.config.js
+│── README.md
+│── tailwind.config.js
+│── vite-env.d.ts
+│── vite.config.js

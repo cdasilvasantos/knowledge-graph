@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+
 
 const API_URL = "http://localhost:3000/api/chat"; // Change this if hosted in cloud
 

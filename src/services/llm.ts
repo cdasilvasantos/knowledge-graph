@@ -1,5 +1,6 @@
 import { LLMResponse, Message, ChatMessage } from '../lib/types';
 
+
 const HISTORY_STORAGE_KEY = 'chat_history';
 
 // ✅ Function to save chat history

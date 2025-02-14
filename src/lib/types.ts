@@ -6,10 +6,11 @@ export interface ChatMessage {
 export interface Message {
   id: string;
   content: string;
-  sender: "user" | "bot"; // ✅ Restrict sender to "user" or "bot"
+  sender: 'user' | 'bot';
   timestamp: string;
-  isError?: boolean; // ✅ Add isError as optional property
+  file?: string; // Add this optional property
 }
+
 
 
 

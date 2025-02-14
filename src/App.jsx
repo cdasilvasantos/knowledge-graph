@@ -1,8 +1,7 @@
-// src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-// Import your two components
+// Import your components
 import KnowledgeGraphManager from "./components/KnowledgeGraphManager";
 import EntityAnalysisDashboard from "./components/EntityAnalysisDashboard";
 import Custom3D from "./components/Custom3D";
@@ -11,19 +10,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import PageNotFound from "./pages/PageNotFound";
-import ChatApp from "./components/ChatApp";
+import ChatApp from "./components/ChatApp"; // Chat Page
 
 export default function App() {
   return (
     <Router>
       <div>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Homepage/>
-            }
-          />
+          <Route path="/" element={<Homepage />} />
           <Route path="/manager" element={<KnowledgeGraphManager />} />
           <Route path="/analysis" element={<EntityAnalysisDashboard />} />
           <Route path="/login" element={<Login />} />
@@ -34,8 +28,7 @@ export default function App() {
           <Route path="/settings" element={<PageNotFound />} />
           <Route path="/profile" element={<PageNotFound />} />
           <Route path="/analytics" element={<PageNotFound />} />
-          <Route path="/reports" element={<PageNotFound />} />
-          <Route path="/pages" element={<ChatApp />} />
+          <Route path="/chat" element={<ChatApp />} /> {/* Chat has its own page now */}
         </Routes>
       </div>
     </Router>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import ChatApp from "../components/ChatApp"; // Import the ChatApp
 
 const Dashboard = () => {
   return (
@@ -18,6 +17,9 @@ const Dashboard = () => {
             </li>
             <li className="mb-2">
               <Link to="/analytics" className="text-blue-600 hover:underline">Analytics</Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/chat" className="text-blue-600 hover:underline">Chat</Link> {/* Navigates to Chat Page */}
             </li>
             <li className="mb-2">
               <Link to="/reports" className="text-blue-600 hover:underline">Reports</Link>
@@ -57,12 +59,6 @@ const Dashboard = () => {
                 </tbody>
               </table>
             </div>
-          </div>
-
-          {/* LLM Chat Component */}
-          <div className="mt-6">
-            <h2 className="text-xl font-bold mb-2">AI Chat Assistant</h2>
-            <ChatApp />
           </div>
         </main>
       </div>
