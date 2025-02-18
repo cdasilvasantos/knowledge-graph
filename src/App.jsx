@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import PageNotFound from "./pages/PageNotFound";
 import ChatApp from "./components/ChatApp"; // Chat Page
+import Logout from "./pages/Logout";
 
 export default function App() {
   return (
@@ -24,11 +25,11 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/3-d" element={<Custom3D />} />
-          <Route path="/logout" element={<PageNotFound />} />
           <Route path="/settings" element={<PageNotFound />} />
           <Route path="/profile" element={<PageNotFound />} />
           <Route path="/analytics" element={<PageNotFound />} />
           <Route path="/chat" element={<ChatApp />} /> {/* Chat has its own page now */}
+          <Route path="/logout" element={<Logout />} /> {/* ✅ Logout Page */}
         </Routes>
       </div>
     </Router>

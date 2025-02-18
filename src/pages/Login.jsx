@@ -1,19 +1,48 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate(); // Hook for navigation
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!username || !password) {
       setError("Both fields are required");
-    } else {
-      setError("");
-      // Handle login logic here
-      console.log("Logging in with:", { username, password });
+      return;
+    }
+
+    try {
+      const formData = new URLSearchParams();
+      formData.append("username", username);
+      formData.append("password", password);
+
+      const response = await fetch("http://localhost:8000/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString(),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Login failed");
+      }
+
+      // Save token to local storage
+      localStorage.setItem("token", data.access_token);
+
+      console.log("Login successful:", data);
+
+      // ✅ Redirect to Dashboard
+      navigate("/dashboard");
+
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -32,10 +61,7 @@ const Login = () => {
         {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
 
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Username
           </label>
           <input
@@ -49,10 +75,7 @@ const Login = () => {
         </div>
 
         <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
             Password
           </label>
           <input
@@ -66,10 +89,7 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col space-y-4">
-          <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
-            type="submit"
-          >
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out" type="submit">
             Login
           </button>
 
