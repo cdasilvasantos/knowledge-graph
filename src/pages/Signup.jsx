@@ -1,18 +1,54 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError("Both fields are required");
-    } else {
+
+    // Basic validation
+    if (!email || !password || !firstName || !lastName) {
+      setError("All fields are required");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8000/register/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          first_name: firstName,
+          last_name: lastName,
+          role: "AUTHENTICATED", // ✅ Assign default role
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Signup failed");
+      }
+
+      setSuccess("Signup successful! Redirecting to login...");
       setError("");
-      // Handle signup logic here
-      console.log("Signing up with:", { email, password });
+
+      // Redirect to Login after 2 seconds
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (err) {
+      setError(err.message);
+      setSuccess("");
     }
   };
 
@@ -24,20 +60,44 @@ const Signup = () => {
         </Link>
       </div>
       <h1 className="text-3xl font-bold mb-6">Sign Up</h1>
-      <form
-        className="bg-white p-6 rounded shadow-md w-80"
-        onSubmit={handleSubmit}
-      >
+      <form className="bg-white p-6 rounded shadow-md w-80" onSubmit={handleSubmit}>
         {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
+        {success && <p className="text-green-500 text-xs italic mb-4">{success}</p>}
+
         <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="email"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
+            First Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="firstName"
+            type="text"
+            placeholder="Enter your first name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
+            Last Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
+            id="lastName"
+            type="text"
+            placeholder="Enter your last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Email
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
             id="email"
             type="email"
             placeholder="Enter your email"
@@ -45,15 +105,13 @@ const Signup = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+
         <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="password"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
             id="password"
             type="password"
             placeholder="Enter your password"
@@ -61,28 +119,22 @@ const Signup = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
         <div className="flex items-center justify-between">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             type="submit"
           >
             Sign Up
           </button>
         </div>
       </form>
+
       <div className="mt-4">
-        <p className="text-gray-600">Or sign up with:</p>
-        <div className="flex space-x-4 mt-2">
-          <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-            Google
-          </button>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-            Facebook
-          </button>
-          <button className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">
-            X
-          </button>
-        </div>
+        <p className="text-gray-600">Already have an account?</p>
+        <Link to="/" className="text-blue-600 hover:underline">
+          Login Here
+        </Link>
       </div>
     </div>
   );
